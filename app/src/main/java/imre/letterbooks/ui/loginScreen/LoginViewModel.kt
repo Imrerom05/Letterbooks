@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 data class LoginUiState(
-    val mailUsername: String = "",
+    val mail: String = "",
     val password: String = "",
     val errorMessage: String? = null,
     val isLoading: Boolean = false
@@ -19,8 +19,8 @@ class LoginViewModel(
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState: StateFlow<LoginUiState> = _uiState
 
-    fun onUsernameChange(value: String) {
-        _uiState.value = _uiState.value.copy(mailUsername = value)
+    fun onMailChange(value: String) {
+        _uiState.value = _uiState.value.copy(mail = value)
     }
 
     fun onPasswordChange(value: String) {
@@ -38,7 +38,7 @@ class LoginViewModel(
     fun login() {
         val state = _uiState.value
 
-        if (state.mailUsername.isBlank() || state.password.isBlank()) {
+        if (state.mail.isBlank() || state.password.isBlank()) {
             setError("Please fill in all fields")
             return
         }
