@@ -31,6 +31,10 @@ class LoginViewModel(
         _uiState.value = _uiState.value.copy(errorMessage = message)
     }
 
+    fun setLoading(value: Boolean) {
+        _uiState.value = _uiState.value.copy(isLoading = value)
+    }
+
     fun login() {
         val state = _uiState.value
 
@@ -40,6 +44,8 @@ class LoginViewModel(
         }
 
         setError(null)
+        setLoading(true)
+
 
         // TODO: call repository here
         // repository.login(state.mailUsername, state.password)

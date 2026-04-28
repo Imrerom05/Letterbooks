@@ -5,12 +5,15 @@ import imre.letterbooks.data.MainRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
+
+
 data class RegisterUiState(
     val mail: String = "",
     val username: String = "",
     val password: String = "",
     val confirmPassword: String = "",
-    val errorMessage: String? = null
+    val errorMessage: String? = null,
+    val isLoading: Boolean = false
 )
 
 class RegisterViewModel(
@@ -40,6 +43,11 @@ class RegisterViewModel(
         _uiState.value = _uiState.value.copy(errorMessage = message)
     }
 
+    fun setLoading(value: Boolean) {
+        _uiState.value = _uiState.value.copy(isLoading = value)
+    }
+
+
     fun register() {
         val state = _uiState.value
 
@@ -59,6 +67,7 @@ class RegisterViewModel(
 
             else -> {
                 setError(null)
+                setLoading(true)
             }
         }
 
