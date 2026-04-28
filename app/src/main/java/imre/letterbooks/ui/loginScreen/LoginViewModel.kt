@@ -45,9 +45,5 @@ class LoginViewModel(
 
         setError(null)
         setLoading(true)
-
-
-        // TODO: call repository here
-        // repository.login(state.mailUsername, state.password)
     }
 }

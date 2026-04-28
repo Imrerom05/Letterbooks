@@ -9,6 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import imre.letterbooks.ui.homeScreen.HomeScreen
 import imre.letterbooks.ui.theme.LetterbooksTheme
 import imre.letterbooks.ui.loginScreen.LoginScreen
 import imre.letterbooks.ui.registerScreen.RegisterScreen
@@ -40,6 +41,11 @@ fun Navigation() {
         composable(route = "registerScreen") {
             RegisterScreen(navController = navController)
         }
+
+        composable(route = "homeScreen") {
+            HomeScreen(navController = navController)
+        }
+
 
 //        composable(
 //            route = "pointScreen/{lat}/{lon}",
