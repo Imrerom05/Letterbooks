@@ -4,14 +4,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import imre.letterbooks.ui.theme.LetterbooksTheme
+import imre.letterbooks.ui.loginScreen.LoginScreen
+
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,29 +20,39 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LetterbooksTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                Navigation()
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
 
-@Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
-    LetterbooksTheme {
-        Greeting("Android")
+fun Navigation() {
+    val navController = rememberNavController()
+
+    NavHost(navController = navController, startDestination = "loginScreen") {
+
+        composable(route = "loginScreen") {
+            LoginScreen(navController = navController)
+        }
+
+        composable(route = "homeScreen") {
+        }
+
+//        composable(
+//            route = "pointScreen/{lat}/{lon}",
+//            arguments = listOf(
+//                navArgument("lat") { type = NavType.StringType },
+//                navArgument("lon") { type = NavType.StringType }
+//            )
+//        ) { backStackEntry ->
+//            val lat = backStackEntry.arguments?.getString("lat")?.toDouble() ?: 0.0
+//            val lon = backStackEntry.arguments?.getString("lon")?.toDouble() ?: 0.0
+//            PointScreen(lat = lat, lon = lon, navController = navController)
+//        }
     }
 }
+
+
+
