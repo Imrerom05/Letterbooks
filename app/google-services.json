@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "801176843425",
+    "project_id": "letterbooks-ea304",
+    "storage_bucket": "letterbooks-ea304.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:801176843425:android:71806681547df43a54ace0",
+        "android_client_info": {
+          "package_name": "imre.letterbooks"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCS0jPdcyWapn8caPHXtmQdXn-N-Mul2MM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
