@@ -9,6 +9,7 @@ data class LoginUiState(
     val mailUsername: String = "",
     val password: String = "",
     val errorMessage: String? = null,
+    val isLoading: Boolean = false
 )
 
 class LoginViewModel(
