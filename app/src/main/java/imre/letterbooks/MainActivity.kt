@@ -11,7 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import imre.letterbooks.ui.theme.LetterbooksTheme
 import imre.letterbooks.ui.loginScreen.LoginScreen
-
+import imre.letterbooks.ui.registerScreen.RegisterScreen
 
 
 class MainActivity : ComponentActivity() {
@@ -37,7 +37,8 @@ fun Navigation() {
             LoginScreen(navController = navController)
         }
 
-        composable(route = "homeScreen") {
+        composable(route = "registerScreen") {
+            RegisterScreen(navController = navController)
         }
 
 //        composable(

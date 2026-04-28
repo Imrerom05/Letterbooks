@@ -9,14 +9,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 
-@Composable
-fun LoginScreen(navController: NavController) {
 
-    var email_username by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var errorMessage by remember { mutableStateOf<String?>(null) }
+@Composable
+fun LoginScreen(navController: NavController,
+                viewModel: LoginViewModel = viewModel()) {
+
+    val uiState by viewModel.uiState.collectAsState()
 
     Box(
         modifier = Modifier
@@ -35,8 +36,8 @@ fun LoginScreen(navController: NavController) {
             )
 
             OutlinedTextField(
-                value = email_username,
-                onValueChange = { email_username = it },
+                value = uiState.mailUsername ?: "",
+                onValueChange = { viewModel.onUsernameChange(it) },
                 label = { Text("Email or Username") },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
@@ -44,8 +45,8 @@ fun LoginScreen(navController: NavController) {
             )
 
             OutlinedTextField(
-                value = password,
-                onValueChange = { password = it },
+                value = uiState.password ?: "",
+                onValueChange = { viewModel.onPasswordChange(it) },
                 label = { Text("Password") },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
@@ -53,7 +54,7 @@ fun LoginScreen(navController: NavController) {
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
             )
 
-            errorMessage?.let {
+            uiState.errorMessage?.let {
                 Text(
                     text = it,
                     color = MaterialTheme.colorScheme.error
@@ -62,18 +63,7 @@ fun LoginScreen(navController: NavController) {
 
             Button(
                 onClick = {
-                    if (email_username.isBlank() || password.isBlank()) {
-                        errorMessage = "Please fill in all fields"
-                    } else {
-                        errorMessage = null
-
-                        // TODO: Replace with real authentication logic
-                        if (email_username == "test@test.com" && password == "1234") {
-                            navController.navigate("home")
-                        } else {
-                            errorMessage = "Invalid credentials"
-                        }
-                    }
+                        viewModel.login()
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -82,7 +72,7 @@ fun LoginScreen(navController: NavController) {
 
             TextButton(
                 onClick = {
-                    navController.navigate("register")
+                    navController.navigate("registerScreen")
                 }
             ) {
                 Text("Don't have an account? Sign up")
