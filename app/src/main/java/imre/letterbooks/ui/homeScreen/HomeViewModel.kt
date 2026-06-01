@@ -6,13 +6,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 data class HomeUiState(
-    val user: R.string
+    val isLoading: Boolean = false,
+    val errorMessage: String? = null
 )
 
 class HomeViewModel() : ViewModel(){
-    private val _uiState = MutableStateFlow(HomeUiState(
-        user = TODO()
-    ))
+    private val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState
-
 }
