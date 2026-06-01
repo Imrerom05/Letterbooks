@@ -1,9 +1,8 @@
-package imre.letterbooks
-
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -56,64 +55,73 @@ sealed class BottomNavItem(
         label = "Explor",
         icon = Icons.Default.Search
     )
+
+
+    /**
+     * Bottom navigation item for the settings.
+     */
+    data object Settings : BottomNavItem(
+        route = "settingsScreen",
+        label = "Settings",
+        icon = Icons.Default.Settings
+    )
 }
 
 
-    /**
-     * List of all items shown in the bottom navigation bar.
-     */
-    val bottomNavItems = listOf(
-        BottomNavItem.Explor,
-        BottomNavItem.Home,
-        BottomNavItem.Profile
-    )
+/**
+ * List of all items shown in the bottom navigation bar.
+ */
+val bottomNavItems = listOf(
+    BottomNavItem.Explor,
+    BottomNavItem.Home,
+    BottomNavItem.Profile
+)
 
-    /**
-     * Composable that renders the bottom navigation bar and handles navigation
-     * between the main screens.
-     *
-     * @param navController The [NavController] used to navigate between screens.
-     */
-    @Composable
-    fun NavBar(navController: NavController) {
-        // Observe the current back stack entry to determine which route is active.
-        val currentRoute = navController
-            .currentBackStackEntryAsState()
-            .value
-            ?.destination
-            ?.route
+/**
+ * Composable that renders the bottom navigation bar and handles navigation
+ * between the main screens.
+ *
+ * @param navController The [NavController] used to navigate between screens.
+ */
+@Composable
+fun NavBar(navController: NavController) {
+    // Observe the current back stack entry to determine which route is active.
+    val currentRoute = navController
+        .currentBackStackEntryAsState()
+        .value
+        ?.destination
+        ?.route
 
-        NavigationBar {
-            bottomNavItems.forEach { item ->
-                val label = item.label
+    NavigationBar {
+        bottomNavItems.forEach { item ->
+            val label = item.label
 
-                NavigationBarItem(
-                    // Mark the item as selected if the current route starts with this item's route.
-                    selected = currentRoute?.startsWith(item.route) == true,
-                    onClick = {
-                        // Only navigate if we are not already on this item's route.
-                        if (currentRoute?.startsWith(item.route) == false) {
-                            navController.navigate(item.route) {
-                                popUpTo(navController.graph.startDestinationId) {
-                                    saveState = true
-                                }
-                                // Avoid multiple copies of the same destination on the back stack.
-                                launchSingleTop = true
-                                restoreState = true
+            NavigationBarItem(
+                // Mark the item as selected if the current route starts with this item's route.
+                selected = currentRoute?.startsWith(item.route) == true,
+                onClick = {
+                    // Only navigate if we are not already on this item's route.
+                    if (currentRoute?.startsWith(item.route) == false) {
+                        navController.navigate(item.route) {
+                            popUpTo(navController.graph.startDestinationId) {
+                                saveState = true
                             }
+                            // Avoid multiple copies of the same destination on the back stack.
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                    },
-                    icon = {
-                        Icon(
-                            imageVector = item.icon,
-                            contentDescription = label
-                        )
-                    },
-                    label = {
-                        Text(text = label)
                     }
-                )
-            }
+                },
+                icon = {
+                    Icon(
+                        imageVector = item.icon,
+                        contentDescription = label
+                    )
+                },
+                label = {
+                    Text(text = label)
+                }
+            )
         }
     }
-
+}
