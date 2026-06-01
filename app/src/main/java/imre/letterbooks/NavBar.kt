@@ -2,6 +2,8 @@ package imre.letterbooks
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -42,7 +44,7 @@ sealed class BottomNavItem(
     data object Profile : BottomNavItem(
         route = "profileScreen",
         label = "Profile",
-        icon = Icons.Default.Home
+        icon = Icons.Default.Person
     )
 
 
@@ -52,7 +54,7 @@ sealed class BottomNavItem(
     data object Explor : BottomNavItem(
         route = "explorScreen",
         label = "Explor",
-        icon = Icons.Default.Home
+        icon = Icons.Default.Search
     )
 }
 
