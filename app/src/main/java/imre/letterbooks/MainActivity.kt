@@ -64,7 +64,7 @@ fun Navigation(startDestination: String = "homeScreen") {
             ProfileScreen(navController = navController)
         }
 
-        composable(route = "explorScreen") {
+        composable(route = "exploreScreen") {
             ExploreScreen(navController = navController)
         }
 

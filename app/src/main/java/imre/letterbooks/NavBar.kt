@@ -51,8 +51,8 @@ sealed class BottomNavItem(
      * Bottom navigation item for the Explor Screen.
      */
     data object Explor : BottomNavItem(
-        route = "explorScreen",
-        label = "Explor",
+        route = "exploreScreen",
+        label = "Explore",
         icon = Icons.Default.Search
     )
 
