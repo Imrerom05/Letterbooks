@@ -11,6 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+
 
 
 /**
@@ -85,43 +90,70 @@ val bottomNavItems = listOf(
  */
 @Composable
 fun NavBar(navController: NavController) {
-    // Observe the current back stack entry to determine which route is active.
+
     val currentRoute = navController
         .currentBackStackEntryAsState()
         .value
         ?.destination
         ?.route
 
-    NavigationBar {
-        bottomNavItems.forEach { item ->
-            val label = item.label
+    Surface(
+        color = Color(0xFF121826),
+        tonalElevation = 8.dp,
+        shadowElevation = 12.dp,
+        shape = RoundedCornerShape(
+            topStart = 24.dp,
+            topEnd = 24.dp
+        )
+    ) {
 
-            NavigationBarItem(
-                // Mark the item as selected if the current route starts with this item's route.
-                selected = currentRoute?.startsWith(item.route) == true,
-                onClick = {
-                    // Only navigate if we are not already on this item's route.
-                    if (currentRoute?.startsWith(item.route) == false) {
-                        navController.navigate(item.route) {
-                            popUpTo(navController.graph.startDestinationId) {
-                                saveState = true
+        NavigationBar(
+            containerColor = Color.Transparent
+        ) {
+
+            bottomNavItems.forEach { item ->
+
+                val selected = currentRoute == item.route
+
+                NavigationBarItem(
+                    selected = selected,
+
+                    onClick = {
+                        if (!selected) {
+                            navController.navigate(item.route) {
+                                popUpTo(navController.graph.startDestinationId) {
+                                    saveState = true
+                                }
+
+                                launchSingleTop = true
+                                restoreState = true
                             }
-                            // Avoid multiple copies of the same destination on the back stack.
-                            launchSingleTop = true
-                            restoreState = true
                         }
+                    },
+
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = Color(0xFF4C7DFF),
+                        selectedTextColor = Color(0xFF4C7DFF),
+
+                        indicatorColor = Color(0xFF4C7DFF)
+                            .copy(alpha = 0.15f),
+
+                        unselectedIconColor = Color(0xFF7A859A),
+                        unselectedTextColor = Color(0xFF7A859A)
+                    ),
+
+                    icon = {
+                        Icon(
+                            imageVector = item.icon,
+                            contentDescription = item.label
+                        )
+                    },
+
+                    label = {
+                        Text(item.label)
                     }
-                },
-                icon = {
-                    Icon(
-                        imageVector = item.icon,
-                        contentDescription = label
-                    )
-                },
-                label = {
-                    Text(text = label)
-                }
-            )
+                )
+            }
         }
     }
 }
