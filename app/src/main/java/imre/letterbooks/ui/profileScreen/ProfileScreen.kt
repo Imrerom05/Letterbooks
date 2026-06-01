@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
@@ -20,6 +22,8 @@ fun ProfileScreen(
     navController: NavController,
     viewModel: ProfileViewModel = viewModel()
 ) {
+    val uiState by viewModel.uiState.collectAsState()
+
     Scaffold(
         bottomBar = {
             NavBar(navController = navController)
@@ -90,7 +94,10 @@ fun ProfileScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "?",
+                            text = uiState.user?.username
+                                ?.firstOrNull()
+                                ?.uppercase()
+                                ?: "",
                             style = MaterialTheme.typography.headlineLarge,
                             color = MaterialTheme.colorScheme.primary
                         )
@@ -100,15 +107,9 @@ fun ProfileScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = "idk",
+                    text = uiState.user?.username ?: "No Connection",
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.primary
-                )
-
-                Text(
-                    text = "@idk",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))
@@ -125,7 +126,7 @@ fun ProfileScreen(
 
                 OutlinedButton(
                     onClick = {
-                        viewModel.lougout()
+                        viewModel.logout()
                         navController.navigate("loginScreen") {
                             popUpTo("profileScreen") {
                                 inclusive = true
