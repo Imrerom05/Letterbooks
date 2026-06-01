@@ -182,7 +182,14 @@ fun RegisterScreen(
                     }
 
                     Button(
-                        onClick = { viewModel.register() },
+                        onClick = {
+                            viewModel.register {
+                                navController.navigate("homeScreen") {
+                                    popUpTo("registerScreen") {
+                                        inclusive = true
+                                    }
+                                }
+                            } },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(48.dp),

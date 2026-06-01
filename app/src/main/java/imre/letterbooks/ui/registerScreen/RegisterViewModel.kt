@@ -1,10 +1,12 @@
 package imre.letterbooks.ui.registerScreen
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import imre.letterbooks.data.AuthRepository
 import imre.letterbooks.data.MainRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-
+import kotlinx.coroutines.launch
 
 
 data class RegisterUiState(
@@ -17,7 +19,7 @@ data class RegisterUiState(
 )
 
 class RegisterViewModel(
-    private val repository: MainRepository = MainRepository()
+    private val repository: AuthRepository = AuthRepository()
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(RegisterUiState())
@@ -48,30 +50,45 @@ class RegisterViewModel(
     }
 
 
-    fun register() {
-        val state = _uiState.value
+        fun register(
+            onSuccess: () -> Unit
+        ) {
 
-        when {
-            state.mail.isBlank() ||
-                    state.username.isBlank() ||
-                    state.password.isBlank() ||
-                    state.confirmPassword.isBlank() -> {
-                setError("Please fill in all fields")
-                return
+            val state = _uiState.value
+
+            when {
+                state.mail.isBlank() ||
+                        state.username.isBlank() ||
+                        state.password.isBlank() ||
+                        state.confirmPassword.isBlank() -> {
+
+                    setError("Please fill in all fields")
+                    return
+                }
+
+                state.password != state.confirmPassword -> {
+
+                    setError("Passwords do not match")
+                    return
+                }
             }
 
-            state.password != state.confirmPassword -> {
-                setError("Passwords do not match")
-                return
-            }
+            viewModelScope.launch {
 
-            else -> {
-                setError(null)
                 setLoading(true)
+
+                repository.register(
+                    state.mail,
+                    state.password
+                )
+                    .onSuccess {
+                        setLoading(false)
+                        onSuccess()
+                    }
+                    .onFailure {
+                        setLoading(false)
+                        setError(it.message)
+                    }
             }
         }
-
-        // TODO: call repository
-        // repository.register(state.mail, state.username, state.password)
     }
-}
