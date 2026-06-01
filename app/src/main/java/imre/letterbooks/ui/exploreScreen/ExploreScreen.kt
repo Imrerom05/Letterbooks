@@ -24,15 +24,6 @@ fun ExploreScreen(
     navController: NavController
 ) {
 
-    val genres = listOf(
-        "Fantasy",
-        "Sci-Fi",
-        "Romance",
-        "Mystery",
-        "History",
-        "Adventure"
-    )
-
     val trendingBooks = listOf(
         "The Silent Pages",
         "Beyond the Horizon",
@@ -138,120 +129,13 @@ fun ExploreScreen(
                     )
                 }
 
-                // Genres
-                item {
-
-                    Text(
-                        text = "Genres",
-                        style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    LazyRow(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-
-                        items(genres) { genre ->
-
-                            AssistChip(
-                                onClick = { },
-                                label = {
-                                    Text(genre)
-                                }
-                            )
-                        }
-                    }
-                }
-
-                // Featured book
-                item {
-
-                    Text(
-                        text = "Featured",
-                        style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-
-                    Card(
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = MaterialTheme.shapes.extraLarge,
-                        colors = CardDefaults.cardColors(
-                            containerColor = Color(0xFF121826)
-                                .copy(alpha = 0.92f)
-                        )
-                    ) {
-
-                        Column(
-                            modifier = Modifier.padding(20.dp)
-                        ) {
-
-                            Text(
-                                text = "Book of the Week",
-                                color = MaterialTheme.colorScheme.primary,
-                                style = MaterialTheme.typography.labelLarge
-                            )
-
-                            Spacer(modifier = Modifier.height(8.dp))
-
-                            Text(
-                                text = "The Silent Pages",
-                                style = MaterialTheme.typography.headlineSmall
-                            )
-
-                            Spacer(modifier = Modifier.height(8.dp))
-
-                            Text(
-                                text = "A mysterious story hidden between forgotten letters.",
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
-                    }
-                }
-
                 // Trending section
                 item {
                     Text(
-                        text = "Trending Books",
+                        text = "Trending with Friends",
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.primary
                     )
-                }
-
-                items(trendingBooks) { book ->
-
-                    Card(
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = MaterialTheme.shapes.large,
-                        colors = CardDefaults.cardColors(
-                            containerColor = Color(0xFF121826)
-                                .copy(alpha = 0.92f)
-                        )
-                    ) {
-
-                        Column(
-                            modifier = Modifier.padding(18.dp)
-                        ) {
-
-                            Text(
-                                text = book,
-                                style = MaterialTheme.typography.titleMedium
-                            )
-
-                            Spacer(modifier = Modifier.height(4.dp))
-
-                            Text(
-                                text = "Popular among Letterbooks readers",
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
-                    }
-                }
-
-                item {
-                    Spacer(modifier = Modifier.height(90.dp))
                 }
             }
         }

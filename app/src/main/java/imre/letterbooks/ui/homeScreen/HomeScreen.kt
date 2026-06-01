@@ -97,28 +97,9 @@ fun HomeScreen(
                     )
 
                     Text(
-                        text = "Discover stories and continue reading",
+                        text = "Were stil working on this page",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-
-                // Search
-                item {
-                    OutlinedTextField(
-                        value = "",
-                        onValueChange = {},
-                        modifier = Modifier.fillMaxWidth(),
-                        placeholder = {
-                            Text("Search books...")
-                        },
-                        leadingIcon = {
-                            Icon(
-                                Icons.Default.Search,
-                                contentDescription = null
-                            )
-                        },
-                        singleLine = true
                     )
                 }
 }}}}
