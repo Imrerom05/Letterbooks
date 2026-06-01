@@ -1,4 +1,6 @@
 package imre.letterbooks.ui.profileScreen
 
-class ProfileScreen {
+import androidx.navigation.NavController
+
+class ProfileScreen (navController: NavController) {
 }

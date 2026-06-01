@@ -9,9 +9,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import imre.letterbooks.ui.exploreScreen.ExploreScreen
 import imre.letterbooks.ui.homeScreen.HomeScreen
 import imre.letterbooks.ui.theme.LetterbooksTheme
 import imre.letterbooks.ui.loginScreen.LoginScreen
+import imre.letterbooks.ui.profileScreen.ProfileScreen
 import imre.letterbooks.ui.registerScreen.RegisterScreen
 
 
@@ -44,6 +46,14 @@ fun Navigation() {
 
         composable(route = "homeScreen") {
             HomeScreen(navController = navController)
+        }
+
+        composable(route = "profileScreen") {
+            ProfileScreen(navController = navController)
+        }
+
+        composable(route = "explorScreen") {
+            ExploreScreen(navController = navController)
         }
 
 
