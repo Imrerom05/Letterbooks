@@ -1,9 +1,12 @@
 package imre.letterbooks.ui.loginScreen
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import imre.letterbooks.data.AuthRepository
 import imre.letterbooks.data.MainRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 data class LoginUiState(
     val mail: String = "",
@@ -13,7 +16,7 @@ data class LoginUiState(
 )
 
 class LoginViewModel(
-    private val repository: MainRepository = MainRepository()
+    private val repository: AuthRepository = AuthRepository()
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LoginUiState())
@@ -27,24 +30,47 @@ class LoginViewModel(
         _uiState.value = _uiState.value.copy(password = value)
     }
 
-    fun setError(message: String?) {
-        _uiState.value = _uiState.value.copy(errorMessage = message)
-    }
-
-    fun setLoading(value: Boolean) {
-        _uiState.value = _uiState.value.copy(isLoading = value)
-    }
-
-    fun login(): Boolean {
+    fun login(
+        onSuccess: () -> Unit
+    ) {
         val state = _uiState.value
 
         if (state.mail.isBlank() || state.password.isBlank()) {
-            setError("Please fill in all fields")
-            return false
+            _uiState.value = state.copy(errorMessage = "Please fill in all fields")
+            return
         }
 
-        setError(null)
-        setLoading(true)
-        return true
+        viewModelScope.launch {
+            _uiState.value =
+                state.copy(
+                    isLoading = true,
+                    errorMessage = null
+                )
+
+            repository.login(
+                state.mail,
+                state.password
+            )
+                .onSuccess {
+
+                    _uiState.value =
+                        _uiState.value.copy(
+                            isLoading = false
+                        )
+                    onSuccess()
+                }
+                .onFailure {
+                    _uiState.value =
+                        _uiState.value.copy(
+                            isLoading = false,
+                            errorMessage = it.message
+                        )
+                }
+        }
     }
 }
+
+
+
+
+

@@ -142,9 +142,14 @@ fun LoginScreen(
                 }
 
                 Button(
-                    onClick = { if (viewModel.login()) {
-                        navController.navigate("homeScreen")
-                    } },
+                    onClick = {
+                        viewModel.login {
+                            navController.navigate("homeScreen") {
+                                popUpTo("loginScreen") {
+                                    inclusive = true
+                                }
+                            }
+                        } },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp),
