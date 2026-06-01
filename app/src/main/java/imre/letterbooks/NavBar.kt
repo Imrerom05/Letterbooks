@@ -101,10 +101,6 @@ fun NavBar(navController: NavController) {
         color = Color(0xFF121826),
         tonalElevation = 8.dp,
         shadowElevation = 12.dp,
-        shape = RoundedCornerShape(
-            topStart = 24.dp,
-            topEnd = 24.dp
-        )
     ) {
 
         NavigationBar(
