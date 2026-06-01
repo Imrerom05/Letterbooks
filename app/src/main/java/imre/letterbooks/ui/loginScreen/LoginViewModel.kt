@@ -35,15 +35,16 @@ class LoginViewModel(
         _uiState.value = _uiState.value.copy(isLoading = value)
     }
 
-    fun login() {
+    fun login(): Boolean {
         val state = _uiState.value
 
         if (state.mail.isBlank() || state.password.isBlank()) {
             setError("Please fill in all fields")
-            return
+            return false
         }
 
         setError(null)
         setLoading(true)
+        return true
     }
 }

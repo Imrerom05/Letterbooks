@@ -61,9 +61,9 @@ sealed class BottomNavItem(
      * List of all items shown in the bottom navigation bar.
      */
     val bottomNavItems = listOf(
-        BottomNavItem.Profile,
+        BottomNavItem.Home,
         BottomNavItem.Explor,
-        BottomNavItem.Home
+        BottomNavItem.Profile
     )
 
     /**

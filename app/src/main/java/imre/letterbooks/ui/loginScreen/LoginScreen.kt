@@ -142,7 +142,9 @@ fun LoginScreen(
                 }
 
                 Button(
-                    onClick = { viewModel.login() },
+                    onClick = { if (viewModel.login()) {
+                        navController.navigate("homeScreen")
+                    } },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp),
