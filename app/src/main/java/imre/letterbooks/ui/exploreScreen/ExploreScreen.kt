@@ -120,7 +120,7 @@ fun ExploreScreen(
                         onValueChange = {
                             viewModel.updateQuery(it)
 
-                            if (uiState.value.query.length >= 2) {
+                            if (it.length >= 2) {
                                 viewModel.search(it)
                             }
                         },

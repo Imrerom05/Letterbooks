@@ -1,19 +1,20 @@
 package imre.letterbooks.data.repository
 
+import imre.letterbooks.BuildConfig
 import imre.letterbooks.data.modul.BookItem
 
-class BookRepository {
 
+class BookRepository {
     suspend fun searchBooks(
         query: String
     ): List<BookItem> {
-
         return try {
-            ApiClient.api
-                .searchBooks(query)
-                .items
-
+            BooksApiClient.api.searchBooks(
+                query,
+                BuildConfig.GOOGLE_BOOKS_API_KEY
+            ).items
         } catch (e: Exception) {
+            e.printStackTrace()
             emptyList()
         }
     }

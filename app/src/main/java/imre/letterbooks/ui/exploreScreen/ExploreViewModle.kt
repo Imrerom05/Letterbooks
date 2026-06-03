@@ -26,6 +26,8 @@ class ExploreViewModel(
         viewModelScope.launch {
             val books = bookRepository.searchBooks(query)
             _uiState.value = _uiState.value.copy(books = books)
+            println("Search query: $query")
+            println(books)
         }
     }
 
