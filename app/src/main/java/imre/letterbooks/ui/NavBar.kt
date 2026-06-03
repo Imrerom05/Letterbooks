@@ -119,7 +119,6 @@ fun NavBar(navController: NavController) {
                                 popUpTo(navController.graph.startDestinationId) {
                                     saveState = true
                                 }
-
                                 launchSingleTop = true
                                 restoreState = true
                             }

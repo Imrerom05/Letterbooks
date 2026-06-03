@@ -1,6 +1,5 @@
-package imre.letterbooks.ui.homeScreen
+package imre.letterbooks.ui.exploreScreen
 
-import android.R
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import imre.letterbooks.data.modul.BookItem
@@ -33,6 +32,10 @@ class ExploreViewModel(
 
     fun updateQuery(query: String) {
         _uiState.value = _uiState.value.copy(query = query)
+    }
+
+    fun clearBooks() {
+        _uiState.value = _uiState.value.copy(books = emptyList())
     }
 }
 

@@ -4,7 +4,6 @@ import NavBar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -12,10 +11,6 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
@@ -24,7 +19,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import imre.letterbooks.ui.homeScreen.ExploreViewModel
+import coil.compose.AsyncImage
+import imre.letterbooks.data.modul.BookItem
 
 @Composable
 fun ExploreScreen(
@@ -119,9 +115,10 @@ fun ExploreScreen(
                         value = uiState.value.query,
                         onValueChange = {
                             viewModel.updateQuery(it)
-
                             if (it.length >= 2) {
                                 viewModel.search(it)
+                            } else {
+                                viewModel.clearBooks()
                             }
                         },
                         modifier = Modifier.fillMaxWidth(),
@@ -143,33 +140,63 @@ fun ExploreScreen(
 
                 // Book items
                 items(uiState.value.books) { book ->
-                    Card(
-                        modifier = Modifier.fillMaxWidth(),
-                        onClick = {
-//                            navController.navigate(
-//                                "bookDetails/${book.id}"
-//                            )
-                        }
-                    ) {
-                        Column(
-                            modifier = Modifier.padding(16.dp)
-                        ) {
-
-                            Text(
-                                text = book.volumeInfo.title,
-                                style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.primary
-                            )
-
-                            Text(
-                                text = book.volumeInfo.authors.joinToString(),
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.primary
-                            )
-
-                        }
-                    }
+                    BookItemCard(book)
                 }
+            }
+        }
+    }
+}
+
+
+@Composable
+fun BookItemCard(book: BookItem) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        onClick = {
+            // Navigate to details
+        }
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+
+            AsyncImage(
+                model = book.volumeInfo.imageLinks?.thumbnail,
+                contentDescription = book.volumeInfo.title,
+                modifier = Modifier
+                    .width(90.dp)
+                    .height(130.dp)
+            )
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+
+                Text(
+                    text = book.volumeInfo.title,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Text(
+                    text = book.volumeInfo.authors.joinToString(),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = book.volumeInfo.publishedDate,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
         }
     }
