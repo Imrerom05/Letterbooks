@@ -1,8 +1,8 @@
 package imre.letterbooks.ui.profileScreen
 
 import androidx.lifecycle.ViewModel
-import imre.letterbooks.data.AuthRepository
-import imre.letterbooks.data.FirebaseRepository
+import imre.letterbooks.data.repository.AuthRepository
+import imre.letterbooks.data.repository.FirebaseRepository
 import imre.letterbooks.data.modul.User
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

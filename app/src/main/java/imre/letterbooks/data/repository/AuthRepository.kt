@@ -1,10 +1,9 @@
-package imre.letterbooks.data
+package imre.letterbooks.data.repository
+
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.tasks.await
 import imre.letterbooks.data.modul.User
-
-
+import kotlinx.coroutines.tasks.await
 
 class AuthRepository {
     private val auth = FirebaseAuth.getInstance()

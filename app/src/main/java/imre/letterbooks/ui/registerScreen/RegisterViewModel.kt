@@ -2,7 +2,7 @@ package imre.letterbooks.ui.registerScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import imre.letterbooks.data.AuthRepository
+import imre.letterbooks.data.repository.AuthRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
