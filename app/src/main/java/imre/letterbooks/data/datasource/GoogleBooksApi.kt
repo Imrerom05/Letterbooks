@@ -19,21 +19,9 @@ object BooksApiClient {
     private const val BASE_URL =
         "https://www.googleapis.com/books/v1/"
 
-    private val loggingInterceptor =
-        HttpLoggingInterceptor { message ->
-            println(message)
-        }.apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        }
-
-    private val client = OkHttpClient.Builder()
-        .addInterceptor(loggingInterceptor)
-        .build()
-
     val api: GoogleBooksApi by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .client(client)
             .addConverterFactory(
                 GsonConverterFactory.create()
             )

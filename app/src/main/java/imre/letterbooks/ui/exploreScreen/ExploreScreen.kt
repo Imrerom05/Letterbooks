@@ -123,7 +123,7 @@ fun ExploreScreen(
                         },
                         modifier = Modifier.fillMaxWidth(),
                         placeholder = {
-                            Text("Search books, authors...")
+                            Text("Search books")
                         },
                         leadingIcon = {
                             Icon(
@@ -161,9 +161,11 @@ fun BookItemCard(book: BookItem) {
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
+            val imageUrl = book.volumeInfo.imageLinks?.thumbnail
+                ?.replace("http://", "https://")
 
             AsyncImage(
-                model = book.volumeInfo.imageLinks?.thumbnail,
+                model = imageUrl,
                 contentDescription = book.volumeInfo.title,
                 modifier = Modifier
                     .width(90.dp)
@@ -178,6 +180,7 @@ fun BookItemCard(book: BookItem) {
 
                 Text(
                     text = book.volumeInfo.title,
+                    maxLines = 2,
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
