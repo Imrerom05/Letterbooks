@@ -6,6 +6,7 @@ import imre.letterbooks.data.datasource.OpenLibraryApiImpl
 import imre.letterbooks.data.modul.Book
 import imre.letterbooks.data.modul.BookDoc
 import imre.letterbooks.data.modul.BookItem
+import imre.letterbooks.data.modul.WorkDetail
 
 
 class BookRepository {
@@ -25,6 +26,11 @@ class BookRepository {
             emptyList() // or emit error state
         }
     }
+
+    suspend fun getBookDetails(workId: String): WorkDetail {
+        return openLibraryApi.getBookDetails(workId)
+    }
+
 
     suspend fun searchBooksGoogle(
         query: String

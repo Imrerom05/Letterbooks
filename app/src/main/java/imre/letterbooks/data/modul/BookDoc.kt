@@ -21,5 +21,12 @@ data class Book(
     val title: String,
     val author: String,
     val firstPublishYear: Int?,
-    val coverUrl: String?
+    val coverUrl: String?,
+    val workDetail: WorkDetail? = null
+)
+
+@Serializable
+data class WorkDetail(
+    val title: String,
+    val description: String? = null
 )

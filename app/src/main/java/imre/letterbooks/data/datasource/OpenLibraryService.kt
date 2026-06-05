@@ -2,6 +2,7 @@ package imre.letterbooks.data.datasource
 
 import imre.letterbooks.data.modul.Book
 import imre.letterbooks.data.modul.SearchResponse
+import imre.letterbooks.data.modul.WorkDetail
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.cio.CIO
@@ -22,6 +23,10 @@ class OpenLibraryApiImpl(
         return client.get("https://openlibrary.org/search.json") {
             parameter("q", query)
         }.body()
+    }
+
+    suspend fun getBookDetails(workId: String): WorkDetail {
+        return client.get("https://openlibrary.org$workId.json").body()
     }
 }
 
