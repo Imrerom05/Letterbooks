@@ -21,7 +21,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import imre.letterbooks.data.modul.Book
-import imre.letterbooks.data.modul.BookItem
 
 @Composable
 fun ExploreScreen(
@@ -119,7 +118,7 @@ fun ExploreScreen(
                             if (it.length >= 3) {
                                 viewModel.search(it)
                             } else {
-                                viewModel.clearBooks()
+                                viewModel.clearSearchResult()
                             }
                         },
                         modifier = Modifier.fillMaxWidth(),
@@ -140,7 +139,7 @@ fun ExploreScreen(
                 }
 
                 // Book items
-                items(uiState.value.books) { book ->
+                items(uiState.value.searchResult) { book ->
                     BookCard(book)
                 }
             }

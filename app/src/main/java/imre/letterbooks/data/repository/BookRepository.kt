@@ -12,12 +12,18 @@ class BookRepository {
 
     val client = NetworkClient.httpClient
     val openLibraryApi = OpenLibraryApiImpl(client)
-    suspend fun searchBooks(query: String): List<Book> {
-        val response = openLibraryApi.searchBooks(query)
 
-        return response.docs
-            .distinctBy { it.key }
-            .map { it.toDomain() }
+    suspend fun searchBooks(query: String): List<Book> {
+        return try {
+            val response = openLibraryApi.searchBooks(query)
+
+            response.docs
+                .distinctBy { it.key }
+                .map { it.toDomain() }
+
+        } catch (e: Exception) {
+            emptyList() // or emit error state
+        }
     }
 
     suspend fun searchBooksGoogle(

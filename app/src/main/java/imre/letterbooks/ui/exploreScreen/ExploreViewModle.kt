@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 data class ExploreUiState(
-    val books: List<Book> = emptyList(),
+    val searchResult: List<Book> = emptyList(),
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
     val query: String = ""
@@ -24,10 +24,10 @@ class ExploreViewModel(
 
     fun search(query: String) {
         viewModelScope.launch {
-            val books = bookRepository.searchBooks(query)
-            _uiState.value = _uiState.value.copy(books = books)
+            val searchResult = bookRepository.searchBooks(query)
+            _uiState.value = _uiState.value.copy(searchResult = searchResult)
             println("Search query: $query")
-            println(books)
+            println(searchResult)
         }
     }
 
@@ -35,8 +35,8 @@ class ExploreViewModel(
         _uiState.value = _uiState.value.copy(query = query)
     }
 
-    fun clearBooks() {
-        _uiState.value = _uiState.value.copy(books = emptyList())
+    fun clearSearchResult() {
+        _uiState.value = _uiState.value.copy(searchResult = emptyList())
     }
 }
 

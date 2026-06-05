@@ -29,12 +29,17 @@ class OpenLibraryApiImpl(
 object NetworkClient {
 
     val httpClient = HttpClient(CIO) {
+
         install(ContentNegotiation) {
-            json(
-                Json {
-                    ignoreUnknownKeys = true
-                }
-            )
+            json(Json {
+                ignoreUnknownKeys = true
+            })
+        }
+
+        install(io.ktor.client.plugins.HttpTimeout) {
+            requestTimeoutMillis = 10_000
+            connectTimeoutMillis = 10_000
+            socketTimeoutMillis = 10_000
         }
     }
 }
