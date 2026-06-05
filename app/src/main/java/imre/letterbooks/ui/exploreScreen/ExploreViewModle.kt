@@ -37,7 +37,7 @@ class ExploreViewModel(
 
         searchJob = viewModelScope.launch {
             try {
-                delay(250) // debounce
+                delay(300) // debounce
                 val searchResult = bookRepository.searchBooks(query)
 
                 // Only apply if this job is still active
