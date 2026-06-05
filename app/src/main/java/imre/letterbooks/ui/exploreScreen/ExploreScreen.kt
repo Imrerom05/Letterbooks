@@ -1,5 +1,6 @@
 package imre.letterbooks.ui.exploreScreen
 
+import ExploreViewModel
 import NavBar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
