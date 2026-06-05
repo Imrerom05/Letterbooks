@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import imre.letterbooks.data.modul.Book
 import imre.letterbooks.data.modul.BookItem
 
 @Composable
@@ -119,7 +120,7 @@ fun ProfileScreen(
                     color = MaterialTheme.colorScheme.primary
                 )
 
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(20.dp))
 
                 FavoriteBooksSection(
                     books = uiState.favoriteBooks,
@@ -162,11 +163,10 @@ fun ProfileScreen(
 
 @Composable
 fun BookHolder(
-    book: BookItem?,
+    book: Book?,
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
-
     Card(
         modifier = modifier
             .aspectRatio(0.7f)
@@ -180,12 +180,12 @@ fun BookHolder(
 
         if (book != null) {
 
-            val imageUrl = book.volumeInfo.imageLinks?.thumbnail
+            val imageUrl = book.coverUrl
                 ?.replace("http://", "https://")
 
             AsyncImage(
                 model = imageUrl,
-                contentDescription = book.volumeInfo.title,
+                contentDescription = book.title,
                 modifier = Modifier.fillMaxSize()
             )
 
@@ -195,7 +195,6 @@ fun BookHolder(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = "Add favorite book",
@@ -210,18 +209,11 @@ fun BookHolder(
 
 @Composable
 fun FavoriteBooksSection(
-    books: List<BookItem?>,
-    onBookClick: (BookItem?) -> Unit
+    books: List<Book?>,
+    onBookClick: (Book?) -> Unit
 ) {
 
     Column {
-
-        Text(
-            text = "Top 4",
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.primary
-        )
-
         Spacer(modifier = Modifier.height(12.dp))
 
         Row(
