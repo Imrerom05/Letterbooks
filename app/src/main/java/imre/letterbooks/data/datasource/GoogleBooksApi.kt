@@ -15,7 +15,8 @@ interface GoogleBooksApi {
 }
 
 
-object BooksApiClient {
+
+object GoogleBooksApiClient {
     private const val BASE_URL =
         "https://www.googleapis.com/books/v1/"
 

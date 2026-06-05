@@ -2,6 +2,7 @@ package imre.letterbooks.ui.exploreScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import imre.letterbooks.data.modul.Book
 import imre.letterbooks.data.modul.BookItem
 import imre.letterbooks.data.repository.BookRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -9,7 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 data class ExploreUiState(
-    val books: List<BookItem> = emptyList(),
+    val books: List<Book> = emptyList(),
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
     val query: String = ""

@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import imre.letterbooks.data.modul.Book
 import imre.letterbooks.data.modul.BookItem
 
 @Composable
@@ -115,7 +116,7 @@ fun ExploreScreen(
                         value = uiState.value.query,
                         onValueChange = {
                             viewModel.updateQuery(it)
-                            if (it.length >= 2) {
+                            if (it.length >= 3) {
                                 viewModel.search(it)
                             } else {
                                 viewModel.clearBooks()
@@ -140,7 +141,7 @@ fun ExploreScreen(
 
                 // Book items
                 items(uiState.value.books) { book ->
-                    BookItemCard(book)
+                    BookCard(book)
                 }
             }
         }
@@ -149,24 +150,23 @@ fun ExploreScreen(
 
 
 @Composable
-fun BookItemCard(book: BookItem) {
+fun BookCard(
+    book: Book,
+    onClick: () -> Unit = {}
+) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        onClick = {
-            // Navigate to details
-        }
+        onClick = onClick
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            val imageUrl = book.volumeInfo.imageLinks?.thumbnail
-                ?.replace("http://", "https://")
 
             AsyncImage(
-                model = imageUrl,
-                contentDescription = book.volumeInfo.title,
+                model = book.coverUrl,
+                contentDescription = book.title,
                 modifier = Modifier
                     .width(90.dp)
                     .height(130.dp)
@@ -179,7 +179,7 @@ fun BookItemCard(book: BookItem) {
             ) {
 
                 Text(
-                    text = book.volumeInfo.title,
+                    text = book.title,
                     maxLines = 2,
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.primary
@@ -188,7 +188,7 @@ fun BookItemCard(book: BookItem) {
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text = book.volumeInfo.authors.joinToString(),
+                    text = book.author,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface
                 )
@@ -196,7 +196,7 @@ fun BookItemCard(book: BookItem) {
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = book.volumeInfo.publishedDate,
+                    text = book.firstPublishYear?.toString() ?: "Unknown",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
