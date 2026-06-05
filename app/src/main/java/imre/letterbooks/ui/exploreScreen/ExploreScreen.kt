@@ -124,7 +124,7 @@ fun ExploreScreen(
                         },
                         modifier = Modifier.fillMaxWidth(),
                         placeholder = {
-                            Text("Search books")
+                            Text("Search books, authors...")
                         },
                         leadingIcon = {
                             Icon(

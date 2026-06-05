@@ -6,6 +6,7 @@ import imre.letterbooks.data.modul.WorkDetail
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.cio.CIO
+import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.*
 import io.ktor.serialization.kotlinx.json.json
@@ -22,6 +23,7 @@ class OpenLibraryApiImpl(
     override suspend fun searchBooks(query: String): SearchResponse {
         return client.get("https://openlibrary.org/search.json") {
             parameter("q", query)
+            parameter("limit", 10)
         }.body()
     }
 
@@ -33,15 +35,19 @@ class OpenLibraryApiImpl(
 
 object NetworkClient {
 
+    val json = Json {
+        ignoreUnknownKeys = true
+        isLenient = true
+        explicitNulls = false
+    }
+
     val httpClient = HttpClient(CIO) {
 
         install(ContentNegotiation) {
-            json(Json {
-                ignoreUnknownKeys = true
-            })
+            json(json)
         }
 
-        install(io.ktor.client.plugins.HttpTimeout) {
+        install(HttpTimeout) {
             requestTimeoutMillis = 10_000
             connectTimeoutMillis = 10_000
             socketTimeoutMillis = 10_000

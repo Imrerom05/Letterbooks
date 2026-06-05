@@ -3,6 +3,7 @@ import androidx.lifecycle.viewModelScope
 import imre.letterbooks.data.modul.Book
 import imre.letterbooks.data.repository.BookRepository
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.isActive
@@ -36,6 +37,7 @@ class ExploreViewModel(
 
         searchJob = viewModelScope.launch {
             try {
+                delay(250) // debounce
                 val searchResult = bookRepository.searchBooks(query)
 
                 // Only apply if this job is still active
@@ -50,7 +52,8 @@ class ExploreViewModel(
                 if (isActive) {
                     _uiState.value = _uiState.value.copy(
                         isLoading = false,
-                        errorMessage = e.message
+                        errorMessage = e.message,
+                        searchResult = emptyList()
                     )
                 }
             }

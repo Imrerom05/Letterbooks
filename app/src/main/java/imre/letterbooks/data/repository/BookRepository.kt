@@ -14,15 +14,25 @@ class BookRepository {
     val client = NetworkClient.httpClient
     val openLibraryApi = OpenLibraryApiImpl(client)
 
+    private val cache = mutableMapOf<String, List<Book>>()
+
     suspend fun searchBooks(query: String): List<Book> {
         return try {
-            val response = openLibraryApi.searchBooks(query)
+            println("STARTING SCHETTCH")
+            cache[query]?.let { return it }
 
-            response.docs
-                .distinctBy { it.key }
+            val result = openLibraryApi.searchBooks(query)
+                .docs
+                .take(10)
                 .map { it.toDomain() }
 
+            cache[query] = result
+            println(result)
+            return result
+
+
         } catch (e: Exception) {
+            e.printStackTrace()
             emptyList() // or emit error state
         }
     }
