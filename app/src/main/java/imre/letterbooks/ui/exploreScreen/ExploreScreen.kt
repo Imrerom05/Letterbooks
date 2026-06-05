@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import imre.letterbooks.data.modul.Book
+import imre.letterbooks.data.modul.BookSugestion
 
 @Composable
 fun ExploreScreen(
@@ -151,7 +151,7 @@ fun ExploreScreen(
 
 @Composable
 fun BookCard(
-    book: Book,
+    bookSugestion: BookSugestion,
     onClick: () -> Unit = {}
 ) {
     Card(
@@ -165,8 +165,8 @@ fun BookCard(
         ) {
 
             AsyncImage(
-                model = book.coverUrl,
-                contentDescription = book.title,
+                model = bookSugestion.coverUrl,
+                contentDescription = bookSugestion.title,
                 modifier = Modifier
                     .width(90.dp)
                     .height(130.dp)
@@ -179,7 +179,7 @@ fun BookCard(
             ) {
 
                 Text(
-                    text = book.title,
+                    text = bookSugestion.title,
                     maxLines = 2,
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.primary
@@ -188,7 +188,7 @@ fun BookCard(
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text = book.author,
+                    text = bookSugestion.author,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface
                 )
@@ -196,7 +196,7 @@ fun BookCard(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = book.firstPublishYear?.toString() ?: "Unknown",
+                    text = bookSugestion.firstPublishYear?.toString() ?: "Unknown",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

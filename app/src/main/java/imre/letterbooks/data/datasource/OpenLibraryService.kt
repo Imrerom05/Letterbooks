@@ -1,6 +1,5 @@
 package imre.letterbooks.data.datasource
 
-import imre.letterbooks.data.modul.Book
 import imre.letterbooks.data.modul.SearchResponse
 import imre.letterbooks.data.modul.WorkDetail
 import io.ktor.client.*

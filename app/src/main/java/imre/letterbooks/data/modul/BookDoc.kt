@@ -16,13 +16,12 @@ data class BookDoc(
     val cover_i: Int? = null
 )
 
-data class Book(
+data class BookSugestion(
     val workId: String,
     val title: String,
     val author: String,
     val firstPublishYear: Int?,
     val coverUrl: String?,
-    val workDetail: WorkDetail? = null
 )
 
 @Serializable

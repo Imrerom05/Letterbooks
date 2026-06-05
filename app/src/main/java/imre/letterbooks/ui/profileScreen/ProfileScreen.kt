@@ -22,8 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import imre.letterbooks.data.modul.Book
-import imre.letterbooks.data.modul.BookItem
+import imre.letterbooks.data.modul.BookSugestion
 
 @Composable
 fun ProfileScreen(
@@ -123,7 +122,7 @@ fun ProfileScreen(
                 Spacer(modifier = Modifier.height(20.dp))
 
                 FavoriteBooksSection(
-                    books = uiState.favoriteBooks,
+                    bookSugestions = uiState.favoriteBookSugestions,
                     onBookClick = {
                         // TODO Navigate to book details
                     }
@@ -163,7 +162,7 @@ fun ProfileScreen(
 
 @Composable
 fun BookHolder(
-    book: Book?,
+    bookSugestion: BookSugestion?,
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
@@ -178,14 +177,14 @@ fun BookHolder(
         )
     ) {
 
-        if (book != null) {
+        if (bookSugestion != null) {
 
-            val imageUrl = book.coverUrl
+            val imageUrl = bookSugestion.coverUrl
                 ?.replace("http://", "https://")
 
             AsyncImage(
                 model = imageUrl,
-                contentDescription = book.title,
+                contentDescription = bookSugestion.title,
                 modifier = Modifier.fillMaxSize()
             )
 
@@ -209,8 +208,8 @@ fun BookHolder(
 
 @Composable
 fun FavoriteBooksSection(
-    books: List<Book?>,
-    onBookClick: (Book?) -> Unit
+    bookSugestions: List<BookSugestion?>,
+    onBookClick: (BookSugestion?) -> Unit
 ) {
 
     Column {
@@ -224,10 +223,10 @@ fun FavoriteBooksSection(
             repeat(4) { index ->
 
                 BookHolder(
-                    book = books.getOrNull(index),
+                    bookSugestion = bookSugestions.getOrNull(index),
                     modifier = Modifier.weight(1f),
                     onClick = {
-                        onBookClick(books.getOrNull(index))
+                        onBookClick(bookSugestions.getOrNull(index))
                     }
                 )
             }

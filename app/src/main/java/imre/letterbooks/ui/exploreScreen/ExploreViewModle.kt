@@ -1,6 +1,6 @@
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import imre.letterbooks.data.modul.Book
+import imre.letterbooks.data.modul.BookSugestion
 import imre.letterbooks.data.repository.BookRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -10,7 +10,7 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
 data class ExploreUiState(
-    val searchResult: List<Book> = emptyList(),
+    val searchResult: List<BookSugestion> = emptyList(),
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
     val query: String = ""
@@ -53,7 +53,6 @@ class ExploreViewModel(
                     _uiState.value = _uiState.value.copy(
                         isLoading = false,
                         errorMessage = e.message,
-                        searchResult = emptyList()
                     )
                 }
             }

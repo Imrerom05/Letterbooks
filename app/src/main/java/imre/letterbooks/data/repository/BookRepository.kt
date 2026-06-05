@@ -3,7 +3,7 @@ package imre.letterbooks.data.repository
 import imre.letterbooks.BuildConfig
 import imre.letterbooks.data.datasource.NetworkClient
 import imre.letterbooks.data.datasource.OpenLibraryApiImpl
-import imre.letterbooks.data.modul.Book
+import imre.letterbooks.data.modul.BookSugestion
 import imre.letterbooks.data.modul.BookDoc
 import imre.letterbooks.data.modul.BookItem
 import imre.letterbooks.data.modul.WorkDetail
@@ -14,9 +14,9 @@ class BookRepository {
     val client = NetworkClient.httpClient
     val openLibraryApi = OpenLibraryApiImpl(client)
 
-    private val cache = mutableMapOf<String, List<Book>>()
+    private val cache = mutableMapOf<String, List<BookSugestion>>()
 
-    suspend fun searchBooks(query: String): List<Book> {
+    suspend fun searchBooks(query: String): List<BookSugestion> {
         return try {
             println("STARTING SCHETTCH")
             cache[query]?.let { return it }
@@ -58,8 +58,8 @@ class BookRepository {
 }
 
 
-fun BookDoc.toDomain(): Book {
-    return Book(
+fun BookDoc.toDomain(): BookSugestion {
+    return BookSugestion(
         workId = key,
         title = title,
         author = author_name?.firstOrNull() ?: "Unknown",
