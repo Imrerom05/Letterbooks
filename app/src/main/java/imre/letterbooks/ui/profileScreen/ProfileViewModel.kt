@@ -1,6 +1,7 @@
 package imre.letterbooks.ui.profileScreen
 
 import androidx.lifecycle.ViewModel
+import imre.letterbooks.data.modul.BookItem
 import imre.letterbooks.data.repository.AuthRepository
 import imre.letterbooks.data.repository.FirebaseRepository
 import imre.letterbooks.data.modul.User
@@ -8,7 +9,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 data class ProfileUiState(
-    val user: User? = null
+    val user: User? = null,
+    val favoriteBooks: List<BookItem?> = emptyList()
 )
 
 class ProfileViewModel(

@@ -1,9 +1,14 @@
 package imre.letterbooks.ui.profileScreen
 
 import NavBar
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -16,6 +21,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import imre.letterbooks.data.modul.BookItem
 
 @Composable
 fun ProfileScreen(
@@ -114,6 +121,15 @@ fun ProfileScreen(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
+                FavoriteBooksSection(
+                    books = uiState.favoriteBooks,
+                    onBookClick = {
+                        // TODO Navigate to book details
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
+
                 Button(
                     onClick = {
                         // TODO Edit profile
@@ -138,6 +154,90 @@ fun ProfileScreen(
                 ) {
                     Text("Logout")
                 }
+            }
+        }
+    }
+}
+
+
+@Composable
+fun BookHolder(
+    book: BookItem?,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+
+    Card(
+        modifier = modifier
+            .aspectRatio(0.7f)
+            .clickable { onClick() },
+        shape = RoundedCornerShape(12.dp),
+        border = BorderStroke(
+            1.dp,
+            MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
+        )
+    ) {
+
+        if (book != null) {
+
+            val imageUrl = book.volumeInfo.imageLinks?.thumbnail
+                ?.replace("http://", "https://")
+
+            AsyncImage(
+                model = imageUrl,
+                contentDescription = book.volumeInfo.title,
+                modifier = Modifier.fillMaxSize()
+            )
+
+        } else {
+
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Add favorite book",
+                    modifier = Modifier.size(32.dp),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+            }
+        }
+    }
+}
+
+
+@Composable
+fun FavoriteBooksSection(
+    books: List<BookItem?>,
+    onBookClick: (BookItem?) -> Unit
+) {
+
+    Column {
+
+        Text(
+            text = "Top 4",
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.primary
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+
+            repeat(4) { index ->
+
+                BookHolder(
+                    book = books.getOrNull(index),
+                    modifier = Modifier.weight(1f),
+                    onClick = {
+                        onBookClick(books.getOrNull(index))
+                    }
+                )
             }
         }
     }
