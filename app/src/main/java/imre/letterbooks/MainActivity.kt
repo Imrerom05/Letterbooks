@@ -1,16 +1,13 @@
 package imre.letterbooks
 
-import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
-import imre.letterbooks.ui.exploreScreen.ExploreScreen
+import imre.letterbooks.ui.bookScreen.ExploreScreen
 import imre.letterbooks.ui.homeScreen.HomeScreen
 import imre.letterbooks.ui.theme.LetterbooksTheme
 import imre.letterbooks.ui.loginScreen.LoginScreen
@@ -64,7 +61,7 @@ fun Navigation(startDestination: String = "homeScreen") {
             ProfileScreen(navController = navController)
         }
 
-        composable(route = "exploreScreen") {
+        composable(route = "bookScreen") {
             ExploreScreen(navController = navController)
         }
 

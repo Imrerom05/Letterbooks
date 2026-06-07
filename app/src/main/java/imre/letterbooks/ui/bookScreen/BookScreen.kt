@@ -1,11 +1,10 @@
-package imre.letterbooks.ui.exploreScreen
+package imre.letterbooks.ui.bookScreen
 
 import ExploreViewModel
 import NavBar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -20,8 +19,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import coil.compose.AsyncImage
-import imre.letterbooks.data.modul.BookSugestion
 
 @Composable
 fun ExploreScreen(
@@ -109,98 +106,9 @@ fun ExploreScreen(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-
-                // Search
-                item {
-                    OutlinedTextField(
-                        value = uiState.value.query,
-                        onValueChange = {
-                            viewModel.updateQuery(it)
-                            if (it.length >= 3) {
-                                viewModel.search(it)
-                            } else {
-                                viewModel.clearSearchResult()
-                            }
-                        },
-                        modifier = Modifier.fillMaxWidth(),
-                        placeholder = {
-                            Text("Search books, authors...")
-                        },
-                        leadingIcon = {
-                            Icon(
-                                Icons.Default.Search,
-                                contentDescription = "Search field"
-                            )
-                        },
-                        singleLine = true,
-                        textStyle = MaterialTheme.typography.bodyMedium.copy(
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                    )
-                }
-
-                // Book items
-                items(uiState.value.searchResult) { book ->
-                    BookCard(book)
-                }
             }
         }
     }
 }
 
 
-@Composable
-fun BookCard(
-    bookSugestion: BookSugestion,
-    onClick: () -> Unit = {}
-) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        onClick = onClick
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-
-            AsyncImage(
-                model = bookSugestion.coverUrl,
-                contentDescription = bookSugestion.title,
-                modifier = Modifier
-                    .width(90.dp)
-                    .height(130.dp)
-            )
-
-            Spacer(modifier = Modifier.width(16.dp))
-
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
-
-                Text(
-                    text = bookSugestion.title,
-                    maxLines = 2,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.primary
-                )
-
-                Spacer(modifier = Modifier.height(4.dp))
-
-                Text(
-                    text = bookSugestion.author,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Text(
-                    text = bookSugestion.firstPublishYear?.toString() ?: "Unknown",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-        }
-    }
-}

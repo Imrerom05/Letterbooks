@@ -1,5 +1,6 @@
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
@@ -52,23 +53,15 @@ sealed class BottomNavItem(
 
 
     /**
-     * Bottom navigation item for the Explor Screen.
+     * Bottom navigation item for the Book Screen.
      */
-    data object Explor : BottomNavItem(
-        route = "exploreScreen",
-        label = "Explore",
-        icon = Icons.Default.Search
+    data object Book : BottomNavItem(
+        route = "bookScreen",
+        label = "Books",
+        icon = Icons.Default.List
     )
 
 
-    /**
-     * Bottom navigation item for the settings.
-     */
-    data object Settings : BottomNavItem(
-        route = "settingsScreen",
-        label = "Settings",
-        icon = Icons.Default.Settings
-    )
 }
 
 
@@ -76,7 +69,7 @@ sealed class BottomNavItem(
  * List of all items shown in the bottom navigation bar.
  */
 val bottomNavItems = listOf(
-    BottomNavItem.Explor,
+    BottomNavItem.Book,
     BottomNavItem.Home,
     BottomNavItem.Profile
 )

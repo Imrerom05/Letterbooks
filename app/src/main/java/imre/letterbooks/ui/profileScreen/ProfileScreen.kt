@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import imre.letterbooks.data.modul.BookSugestion
 
 @Composable
 fun ProfileScreen(
@@ -119,15 +118,6 @@ fun ProfileScreen(
                     color = MaterialTheme.colorScheme.primary
                 )
 
-                Spacer(modifier = Modifier.height(20.dp))
-
-                FavoriteBooksSection(
-                    bookSugestions = uiState.favoriteBookSugestions,
-                    onBookClick = {
-                        // TODO Navigate to book details
-                    }
-                )
-
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Button(
@@ -159,77 +149,3 @@ fun ProfileScreen(
     }
 }
 
-
-@Composable
-fun BookHolder(
-    bookSugestion: BookSugestion?,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit
-) {
-    Card(
-        modifier = modifier
-            .aspectRatio(0.7f)
-            .clickable { onClick() },
-        shape = RoundedCornerShape(12.dp),
-        border = BorderStroke(
-            1.dp,
-            MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
-        )
-    ) {
-
-        if (bookSugestion != null) {
-
-            val imageUrl = bookSugestion.coverUrl
-                ?.replace("http://", "https://")
-
-            AsyncImage(
-                model = imageUrl,
-                contentDescription = bookSugestion.title,
-                modifier = Modifier.fillMaxSize()
-            )
-
-        } else {
-
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Add favorite book",
-                    modifier = Modifier.size(32.dp),
-                    tint = MaterialTheme.colorScheme.primary
-                )
-            }
-        }
-    }
-}
-
-
-@Composable
-fun FavoriteBooksSection(
-    bookSugestions: List<BookSugestion?>,
-    onBookClick: (BookSugestion?) -> Unit
-) {
-
-    Column {
-        Spacer(modifier = Modifier.height(12.dp))
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-
-            repeat(4) { index ->
-
-                BookHolder(
-                    bookSugestion = bookSugestions.getOrNull(index),
-                    modifier = Modifier.weight(1f),
-                    onClick = {
-                        onBookClick(bookSugestions.getOrNull(index))
-                    }
-                )
-            }
-        }
-    }
-}
