@@ -3,12 +3,19 @@ package imre.letterbooks.ui.bookScreen
 import ExploreViewModel
 import NavBar
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -25,7 +32,7 @@ fun ExploreScreen(
     navController: NavController,
     viewModel: ExploreViewModel = viewModel()
 ) {
-    val uiState = viewModel.uiState.collectAsState()
+    viewModel.uiState.collectAsState()
 
 
     Scaffold(
@@ -95,15 +102,9 @@ fun ExploreScreen(
                 item {
 
                     Text(
-                        text = "Explore",
+                        text = "Books",
                         style = MaterialTheme.typography.headlineLarge,
                         color = MaterialTheme.colorScheme.primary
-                    )
-
-                    Text(
-                        text = "Discover books and authors",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }

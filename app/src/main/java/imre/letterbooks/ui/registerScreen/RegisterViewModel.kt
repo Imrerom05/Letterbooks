@@ -49,46 +49,46 @@ class RegisterViewModel(
     }
 
 
-        fun register(
-            onSuccess: () -> Unit
-        ) {
+    fun register(
+        onSuccess: () -> Unit
+    ) {
 
-            val state = _uiState.value
+        val state = _uiState.value
 
-            when {
-                state.mail.isBlank() ||
-                        state.username.isBlank() ||
-                        state.password.isBlank() ||
-                        state.confirmPassword.isBlank() -> {
+        when {
+            state.mail.isBlank() ||
+                    state.username.isBlank() ||
+                    state.password.isBlank() ||
+                    state.confirmPassword.isBlank() -> {
 
-                    setError("Please fill in all fields")
-                    return
-                }
-
-                state.password != state.confirmPassword -> {
-
-                    setError("Passwords do not match")
-                    return
-                }
+                setError("Please fill in all fields")
+                return
             }
 
-            viewModelScope.launch {
+            state.password != state.confirmPassword -> {
 
-                setLoading(true)
-
-                repository.register(
-                    state.mail,
-                    state.password,
-                    state.username
-                )
-                    .onSuccess {
-                        setLoading(false)
-                        onSuccess()
-                    }
-                    .onFailure {
-                        setLoading(false)
-                        setError(it.message)
-                    }
+                setError("Passwords do not match")
+                return
             }
         }
+
+        viewModelScope.launch {
+
+            setLoading(true)
+
+            repository.register(
+                state.mail,
+                state.password,
+                state.username
+            )
+                .onSuccess {
+                    setLoading(false)
+                    onSuccess()
+                }
+                .onFailure {
+                    setLoading(false)
+                    setError(it.message)
+                }
+        }
     }
+}

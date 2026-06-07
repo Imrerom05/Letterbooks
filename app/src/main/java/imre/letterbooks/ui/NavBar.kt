@@ -1,20 +1,21 @@
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AutoStories
+import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.compose.material3.*
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 
 
 
@@ -58,7 +59,7 @@ sealed class BottomNavItem(
     data object Book : BottomNavItem(
         route = "bookScreen",
         label = "Books",
-        icon = Icons.Default.List
+        icon = Icons.Default.AutoStories
     )
 
 

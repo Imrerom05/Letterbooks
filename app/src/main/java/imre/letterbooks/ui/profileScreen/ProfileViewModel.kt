@@ -1,9 +1,9 @@
 package imre.letterbooks.ui.profileScreen
 
 import androidx.lifecycle.ViewModel
+import imre.letterbooks.data.modul.User
 import imre.letterbooks.data.repository.AuthRepository
 import imre.letterbooks.data.repository.FirebaseRepository
-import imre.letterbooks.data.modul.User
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -14,7 +14,7 @@ data class ProfileUiState(
 class ProfileViewModel(
     private val authRepository: AuthRepository = AuthRepository(),
     private val fireRepository: FirebaseRepository = FirebaseRepository()
-) : ViewModel(){
+) : ViewModel() {
     private val _uiState = MutableStateFlow(ProfileUiState())
     val uiState: StateFlow<ProfileUiState> = _uiState
 
@@ -31,8 +31,6 @@ class ProfileViewModel(
     fun logout() {
         authRepository.logout()
     }
-
-
 
 
 }

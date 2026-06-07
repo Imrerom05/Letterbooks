@@ -189,7 +189,8 @@ fun RegisterScreen(
                                         inclusive = true
                                     }
                                 }
-                            } },
+                            }
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(48.dp),
